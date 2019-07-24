@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#FFFFFF">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="7dp"
+        android:layout_gravity="center_horizontal"
+        android:textStyle="bold"
+        android:textSize="11sp"
+        android:textColor="#333333"
+        android:text="拨打日期"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <com.groupandmenu.mypicker.datepicker.date.DatePicker
+            android:id="@+id/dayPicker_dialog"
+            android:layout_width="0dp"
+            android:layout_weight="2"
+            android:layout_height="wrap_content"/>
+        <com.groupandmenu.mypicker.datepicker.time.HourAndMinutePicker
+            android:id="@+id/hourPicker_dialog"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:background="#ffffff"/>
+    </LinearLayout>
+
+    <ImageView
+        android:background="@color/com_ycuwq_datepicker_divider"
+        android:layout_width="match_parent"
+        android:layout_marginTop="20dp"
+        android:layout_height="1px" />
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <Button
+            android:padding="16dp"
+            android:id="@+id/btn_dialog_date_cancel"
+            android:background="#ffffff"
+            android:text="取消"
+            android:textColor="@color/com_ycuwq_datepicker_selectedTextColor"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" />
+        <ImageView
+            android:background="@color/com_ycuwq_datepicker_divider"
+            android:layout_width="1px"
+            android:layout_height="match_parent" />
+        <Button
+            android:padding="16dp"
+            android:id="@+id/btn_dialog_date_decide"
+            android:background="#ffffff"
+            android:text="确定"
+            android:textColor="@color/com_ycuwq_datepicker_selectedTextColor"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+</LinearLayout>

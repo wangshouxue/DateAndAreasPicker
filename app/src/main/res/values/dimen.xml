@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="WheelItemTextSize">10sp</dimen>
+    <dimen name="WheelSelectedItemTextSize">11sp</dimen>
+    <dimen name="WheelItemSpace">4dp</dimen>
+    <dimen name="WheelIndicatorSize">2dp</dimen>
+    <dimen name="WheelMargins">4dp</dimen>
+    <dimen name="WheelItemHeightSpace">15dp</dimen>
+    <dimen name="WheelItemWidthSpace">30dp</dimen>
+
+</resources>
