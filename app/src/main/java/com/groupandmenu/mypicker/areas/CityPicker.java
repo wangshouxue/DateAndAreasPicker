@@ -34,7 +34,7 @@ public class CityPicker extends WheelPicker<String> {
             public void onWheelSelected(String item, int position) {
                 mSelectedCity = item;
                 if (mOnCitySelectedListener != null) {
-                    mOnCitySelectedListener.onCitySelected(item);
+                    mOnCitySelectedListener.onCitySelected(position,item);
                 }
             }
         });
@@ -64,7 +64,7 @@ public class CityPicker extends WheelPicker<String> {
         updateCity();
     }
     public interface OnCitySelectedListener {
-        void onCitySelected(String year);
+        void onCitySelected(int position, String city);
     }
 
 

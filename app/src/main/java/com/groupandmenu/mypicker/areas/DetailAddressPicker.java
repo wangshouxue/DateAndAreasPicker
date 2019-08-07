@@ -14,20 +14,30 @@ import androidx.annotation.Nullable;
 import com.groupandmenu.mypicker.R;
 
 
-public class AddressPicker extends LinearLayout implements ProPicker.OnProSelectedListener,CityPicker.OnCitySelectedListener{
+//具体到区
+public class DetailAddressPicker extends LinearLayout implements ProPicker.OnProSelectedListener,CityPicker.OnCitySelectedListener,AreaPicker.OnAreaSelectedListener{
     private ProPicker mProPicker;
     private CityPicker mCityPicker;
+    private AreaPicker mAreaPicker;
     private OnAddressSelectedListener mOnAddressSelectedListener;
+    int p=0;
+
+    @Override
+    public void onAreaSelected(int pos, String year) {
+        onDateSelected();
+    }
 
     @Override
     public void onCitySelected(int position, String city) {
+        mAreaPicker.setCity(p,position);
         onDateSelected();
     }
 
     @Override
     public void onProSelected(String pro, int position) {
+        p=position;
         mCityPicker.setPro(pro,position);
-
+        mAreaPicker.setCity(p,0);
         onDateSelected();
     }
 
@@ -36,7 +46,7 @@ public class AddressPicker extends LinearLayout implements ProPicker.OnProSelect
      *
      * @param context the context
      */
-    public AddressPicker(Context context) {
+    public DetailAddressPicker(Context context) {
         this(context, null);
     }
 
@@ -46,7 +56,7 @@ public class AddressPicker extends LinearLayout implements ProPicker.OnProSelect
      * @param context the context
      * @param attrs   the attrs
      */
-    public AddressPicker(Context context, @Nullable AttributeSet attrs) {
+    public DetailAddressPicker(Context context, @Nullable AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
@@ -57,13 +67,15 @@ public class AddressPicker extends LinearLayout implements ProPicker.OnProSelect
      * @param attrs        the attrs
      * @param defStyleAttr the def style attr
      */
-    public AddressPicker(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public DetailAddressPicker(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        LayoutInflater.from(context).inflate(R.layout.layout_city, this);
+        LayoutInflater.from(context).inflate(R.layout.layout_area, this);
         initChild();
         initAttrs(context, attrs);
         mProPicker.setBackgroundDrawable(getBackground());
         mCityPicker.setBackgroundDrawable(getBackground());
+        mAreaPicker.setBackgroundDrawable(getBackground());
+
     }
 
     private void initAttrs(Context context, @Nullable AttributeSet attrs) {
@@ -110,10 +122,12 @@ public class AddressPicker extends LinearLayout implements ProPicker.OnProSelect
         setCurtainBorderColor(curtainBorderColor);
     }
     private void initChild() {
-        mProPicker = findViewById(R.id.pro_layout_address);
+        mProPicker = findViewById(R.id.pro_layout);
         mProPicker.setOnProSelectedListener(this);
-        mCityPicker = findViewById(R.id.city_layout_address);
+        mCityPicker = findViewById(R.id.city_layout);
         mCityPicker.setOnCitySelectedListener(this);
+        mAreaPicker = findViewById(R.id.area_layout);
+        mAreaPicker.setOnCitySelectedListener(this);
     }
 
     @Override
@@ -122,6 +136,7 @@ public class AddressPicker extends LinearLayout implements ProPicker.OnProSelect
         if (mProPicker != null && mCityPicker != null ) {
             mProPicker.setBackgroundColor(color);
             mCityPicker.setBackgroundColor(color);
+            mAreaPicker.setBackgroundColor(color);
         }
     }
 
@@ -131,6 +146,7 @@ public class AddressPicker extends LinearLayout implements ProPicker.OnProSelect
         if (mProPicker != null && mCityPicker != null) {
             mProPicker.setBackgroundResource(resid);
             mCityPicker.setBackgroundResource(resid);
+            mAreaPicker.setBackgroundResource(resid);
         }
     }
 
@@ -140,25 +156,26 @@ public class AddressPicker extends LinearLayout implements ProPicker.OnProSelect
         if (mProPicker != null && mCityPicker != null) {
             mProPicker.setBackgroundDrawable(background);
             mCityPicker.setBackgroundDrawable(background);
+            mAreaPicker.setBackgroundDrawable(background);
         }
     }
 
     private void onDateSelected() {
         if (mOnAddressSelectedListener != null) {
             mOnAddressSelectedListener.onAddressSelected(getPro(),
-                    getCity());
+                    getCity(),getArea());
         }
     }
 
     /**
      * Sets date.
      */
-    public void setAddress(String pro,String city) {
+    public void setAddress(String pro, String city) {
         setAddress(pro, city,true);
     }
 
 
-    public void setAddress(String pro,String city, boolean smoothScroll) {
+    public void setAddress(String pro, String city, boolean smoothScroll) {
         mProPicker.setSelectedPro(pro, smoothScroll);
         mCityPicker.setSelectedCity(city, smoothScroll);
     }
@@ -179,6 +196,10 @@ public class AddressPicker extends LinearLayout implements ProPicker.OnProSelect
      */
     public String getCity() {
         return mCityPicker.getSelectedCity();
+    }
+
+    public String getArea() {
+        return mAreaPicker.getSelectedArea();
     }
 
     /**
@@ -208,6 +229,7 @@ public class AddressPicker extends LinearLayout implements ProPicker.OnProSelect
     public void setTextColor(@ColorInt int textColor) {
         mCityPicker.setTextColor(textColor);
         mProPicker.setTextColor(textColor);
+        mAreaPicker.setTextColor(textColor);
     }
 
     /**
@@ -218,6 +240,7 @@ public class AddressPicker extends LinearLayout implements ProPicker.OnProSelect
     public void setTextSize(int textSize) {
         mCityPicker.setTextSize(textSize);
         mProPicker.setTextSize(textSize);
+        mAreaPicker.setTextSize(textSize);
     }
 
     /**
@@ -228,6 +251,7 @@ public class AddressPicker extends LinearLayout implements ProPicker.OnProSelect
     public void setSelectedItemTextColor(@ColorInt int selectedItemTextColor) {
         mCityPicker.setSelectedItemTextColor(selectedItemTextColor);
         mProPicker.setSelectedItemTextColor(selectedItemTextColor);
+        mAreaPicker.setSelectedItemTextColor(selectedItemTextColor);
     }
 
     /**
@@ -238,6 +262,7 @@ public class AddressPicker extends LinearLayout implements ProPicker.OnProSelect
     public void setSelectedItemTextSize(int selectedItemTextSize) {
         mCityPicker.setSelectedItemTextSize(selectedItemTextSize);
         mProPicker.setSelectedItemTextSize(selectedItemTextSize);
+        mAreaPicker.setSelectedItemTextSize(selectedItemTextSize);
     }
 
 
@@ -250,6 +275,7 @@ public class AddressPicker extends LinearLayout implements ProPicker.OnProSelect
     public void setHalfVisibleItemCount(int halfVisibleItemCount) {
         mCityPicker.setHalfVisibleItemCount(halfVisibleItemCount);
         mProPicker.setHalfVisibleItemCount(halfVisibleItemCount);
+        mAreaPicker.setHalfVisibleItemCount(halfVisibleItemCount);
     }
 
     /**
@@ -260,6 +286,7 @@ public class AddressPicker extends LinearLayout implements ProPicker.OnProSelect
     public void setItemWidthSpace(int itemWidthSpace) {
         mCityPicker.setItemWidthSpace(itemWidthSpace);
         mProPicker.setItemWidthSpace(itemWidthSpace);
+        mAreaPicker.setItemWidthSpace(itemWidthSpace);
     }
 
     /**
@@ -270,6 +297,7 @@ public class AddressPicker extends LinearLayout implements ProPicker.OnProSelect
     public void setItemHeightSpace(int itemHeightSpace) {
         mCityPicker.setItemHeightSpace(itemHeightSpace);
         mProPicker.setItemHeightSpace(itemHeightSpace);
+        mAreaPicker.setItemHeightSpace(itemHeightSpace);
     }
 
 
@@ -281,6 +309,7 @@ public class AddressPicker extends LinearLayout implements ProPicker.OnProSelect
     public void setZoomInSelectedItem(boolean zoomInSelectedItem) {
         mCityPicker.setZoomInSelectedItem(zoomInSelectedItem);
         mProPicker.setZoomInSelectedItem(zoomInSelectedItem);
+        mAreaPicker.setZoomInSelectedItem(zoomInSelectedItem);
     }
 
     /**
@@ -291,6 +320,7 @@ public class AddressPicker extends LinearLayout implements ProPicker.OnProSelect
     public void setCyclic(boolean cyclic) {
         mCityPicker.setCyclic(cyclic);
         mProPicker.setCyclic(cyclic);
+        mAreaPicker.setCyclic(cyclic);
     }
 
     /**
@@ -301,6 +331,7 @@ public class AddressPicker extends LinearLayout implements ProPicker.OnProSelect
     public void setTextGradual(boolean textGradual) {
         mCityPicker.setTextGradual(textGradual);
         mProPicker.setTextGradual(textGradual);
+        mAreaPicker.setTextGradual(textGradual);
     }
 
 
@@ -312,6 +343,7 @@ public class AddressPicker extends LinearLayout implements ProPicker.OnProSelect
     public void setShowCurtain(boolean showCurtain) {
         mCityPicker.setShowCurtain(showCurtain);
         mProPicker.setShowCurtain(showCurtain);
+        mAreaPicker.setShowCurtain(showCurtain);
     }
 
     /**
@@ -322,6 +354,7 @@ public class AddressPicker extends LinearLayout implements ProPicker.OnProSelect
     public void setCurtainColor(@ColorInt int curtainColor) {
         mCityPicker.setCurtainColor(curtainColor);
         mProPicker.setCurtainColor(curtainColor);
+        mAreaPicker.setCurtainColor(curtainColor);
     }
 
     /**
@@ -332,6 +365,7 @@ public class AddressPicker extends LinearLayout implements ProPicker.OnProSelect
     public void setShowCurtainBorder(boolean showCurtainBorder) {
         mCityPicker.setShowCurtainBorder(showCurtainBorder);
         mProPicker.setShowCurtainBorder(showCurtainBorder);
+        mAreaPicker.setShowCurtainBorder(showCurtainBorder);
     }
 
     /**
@@ -342,6 +376,7 @@ public class AddressPicker extends LinearLayout implements ProPicker.OnProSelect
     public void setCurtainBorderColor(@ColorInt int curtainBorderColor) {
         mCityPicker.setCurtainBorderColor(curtainBorderColor);
         mProPicker.setCurtainBorderColor(curtainBorderColor);
+        mAreaPicker.setCurtainBorderColor(curtainBorderColor);
     }
 
     /**
@@ -354,6 +389,7 @@ public class AddressPicker extends LinearLayout implements ProPicker.OnProSelect
     public void setIndicatorText(String yearText, String monthText, String dayText) {
         mProPicker.setIndicatorText(yearText);
         mCityPicker.setIndicatorText(monthText);
+        mAreaPicker.setIndicatorText(monthText);
     }
 
     /**
@@ -364,6 +400,7 @@ public class AddressPicker extends LinearLayout implements ProPicker.OnProSelect
     public void setIndicatorTextColor(@ColorInt int textColor) {
         mProPicker.setIndicatorTextColor(textColor);
         mCityPicker.setIndicatorTextColor(textColor);
+        mAreaPicker.setIndicatorTextColor(textColor);
     }
 
     /**
@@ -374,6 +411,7 @@ public class AddressPicker extends LinearLayout implements ProPicker.OnProSelect
     public void setIndicatorTextSize(int textSize) {
         mProPicker.setTextSize(textSize);
         mCityPicker.setTextSize(textSize);
+        mAreaPicker.setTextSize(textSize);
     }
 
     /**
@@ -388,6 +426,6 @@ public class AddressPicker extends LinearLayout implements ProPicker.OnProSelect
      * The interface On date selected listener.
      */
     public interface OnAddressSelectedListener {
-        void onAddressSelected(String pro, String city);
+        void onAddressSelected(String pro, String city, String area);
     }
 }

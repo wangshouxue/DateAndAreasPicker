@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.groupandmenu.mypicker.areas.AddressPickerDialogFragment;
+import com.groupandmenu.mypicker.areas.DAddressDialogFragment;
 import com.groupandmenu.mypicker.datepicker.date.DatePickerDialogFragment;
 import com.groupandmenu.mypicker.datepicker.time.TimePickerDialogFragment;
 
@@ -52,6 +53,20 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onAddressChoose(String pro, String city) {
                         Toast.makeText(MainActivity.this, pro + "-" + city , Toast.LENGTH_SHORT).show();
+                    }
+                });
+                pickerDialogFragment.show(getSupportFragmentManager(), "DatePickerDialogFragment");
+
+            }
+        });
+        findViewById(R.id.bt4).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DAddressDialogFragment pickerDialogFragment = new DAddressDialogFragment();
+                pickerDialogFragment.setOnAddressChooseListener(new DAddressDialogFragment.OnAddressChooseListener() {
+                    @Override
+                    public void onAddressChoose(String pro, String city, String area) {
+                        Toast.makeText(MainActivity.this, pro + "-" + city+ "-" + area , Toast.LENGTH_SHORT).show();
                     }
                 });
                 pickerDialogFragment.show(getSupportFragmentManager(), "DatePickerDialogFragment");
